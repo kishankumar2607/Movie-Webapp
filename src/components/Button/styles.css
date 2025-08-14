@@ -1,0 +1,33 @@
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  transition: all 0.3s ease-in;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-accent:hover {
+  background: transparent;
+  border-color: var(--muted-400);
+  color: var(--white);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border-color: var(--muted-400);
+}
+
+.btn-outline:hover {
+  background-color: var(--accent);
+  color: var(--white);
+}

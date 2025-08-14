@@ -15,6 +15,9 @@
   --accent-600: #6f2f8c;
   --accent-400: #a96bd1;
   --radius: 16px;
+  --radius-12: 12px;
+  --radius-8: 8px;
+  --radius-4: 4px;
   --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 

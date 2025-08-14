@@ -156,10 +156,10 @@
 /* ====== TRENDING GENRES ====== */
 .section--alt {
   background: #0a0a0d;
-  padding: 6rem 0rem
+  padding: 6rem 0rem;
 }
 
-.trending-genres__title{
+.trending-genres__title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -183,21 +183,35 @@
   font-weight: 700;
   transition: border-color 0.12s ease, color 0.12s ease;
 }
+
 .pill:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
 
 /* ====== SPOTLIGHT ====== */
+.spotlight-section {
+  margin: 5rem 0rem;
+}
+
+.spotlight-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
 .spotlight-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
+  gap: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 6rem;
 }
+
 .spotlight-card {
   display: block;
   overflow: hidden;
-  border-radius: var(--radius);
+  border-radius: var(--radius-8);
   text-decoration: none;
   color: #fff;
   background: #111;
@@ -205,21 +219,32 @@
   box-shadow: var(--shadow);
   transition: transform 0.12s ease, border-color 0.12s ease;
 }
+
 .spotlight-card:hover {
   transform: translateY(-3px);
   border-color: #2a2a33;
 }
+
 .spotlight-card__img {
   height: 180px;
   background-size: cover;
   background-position: center;
 }
+
 .spotlight-card__body {
   padding: 14px;
 }
+
+.spotlight-card__body h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
 .spotlight-card__body p {
   color: var(--muted);
   margin-top: 4px;
+  margin-bottom: 8px;
 }
 
 /* decorative images via gradients (keeps it light) */
@@ -251,19 +276,32 @@
 /* ====== CTA ====== */
 .cta {
   background: linear-gradient(135deg, var(--accent), #3a1850 60%);
-  margin-top: 40px;
+  padding: 4rem 0rem;
 }
+
 .cta__inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   gap: 16px;
-  padding: 28px 0;
+  width: 100%;
 }
+
 .cta__text h2 {
-  font-size: clamp(22px, 2vw + 10px, 32px);
-  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
+
+.cta__text p {
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 800px;
+}
+
 .cta__actions {
   display: flex;
   gap: 10px;

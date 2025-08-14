@@ -17,7 +17,7 @@ const Home = () => (
   <section className="home">
     <div className="hero">
       <div className="hero_bg" aria-hidden="true" />
-      <div className="container hero_inner">
+      <Container className="hero_inner">
         <div className="hero_text">
           <h1 className="hero_title">
             Find Your <span>Next Favorite</span> Movie
@@ -38,7 +38,7 @@ const Home = () => (
             className="hero_image"
           />
         </div>
-      </div>
+      </Container>
     </div>
 
     {/* FEATURES */}

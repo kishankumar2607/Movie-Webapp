@@ -1,0 +1,26 @@
+.navbar-style {
+  background-color: #ffffff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 16px 0px;
+}
+
+.nav-brand {
+  font-size: 22px;
+  font-weight: 800;
+    color: #873bad !important;
+}
+
+.nav-link {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.nav-link:hover {
+  color: #873bad;
+}
+
+.navbar-style .navbar-nav .nav-link.active,
+.navbar-style .navbar-nav .nav-link.show {
+  color: #873bad !important;
+}

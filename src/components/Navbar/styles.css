@@ -1,5 +1,5 @@
 .navbar-style {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   padding: 16px 0px;
@@ -8,7 +8,7 @@
 .nav-brand {
   font-size: 22px;
   font-weight: 800;
-    color: #873bad !important;
+  color: #873bad !important;
 }
 
 .nav-link {
@@ -24,4 +24,9 @@
 .navbar-style .navbar-nav .nav-link.active,
 .navbar-style .navbar-nav .nav-link.show {
   color: #873bad !important;
+}
+
+.logo{
+  width: 40px;
+  height: auto;
 }

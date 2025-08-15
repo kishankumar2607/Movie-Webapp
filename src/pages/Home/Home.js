@@ -20,7 +20,7 @@ const Home = () => (
       <title>MovieFinder - Find Your Next Favorite Movie</title>
       <meta
         name="description"
-        content="Discover popular movies, browse by genre, save favorites, and export your watchlist — fast and accessible."
+        content="Discover popular movies, browse by genre, save favorites - fast and accessible."
       />
     </Helmet>
 

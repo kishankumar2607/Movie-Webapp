@@ -2,7 +2,7 @@
 
 Find your next favorite film. Browse **popular** movies, filter by **genres**, view rich **details** (with an inline trailer modal), save **favorites** to local storage, and **export** your list — all in a fast, accessible single-page app.
 
-![MovieFinder Logo](public/assets/images/logo.svg)
+![MovieFinder Logo](public/assets/images/home-page.png)
 
 ---
 
@@ -249,7 +249,7 @@ import { Helmet } from "react-helmet-async";
 
 MIT © 2025 Your Name
 
-## Developed by
+## 🧑‍💻 Developed By
 [Kishan Kumar Das](https://kishankumardas.com) | [GitHub](https://github.com/kishankumar2607) | [LinkedIn](https://www.linkedin.com/in/kishan-kumar-das/)
 
 

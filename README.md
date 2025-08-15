@@ -1,4 +1,4 @@
-# MovieFinder — React SPA
+# MovieFinder Web Application
 
 Find your next favorite film. Browse **popular** movies, filter by **genres**, view rich **details** (with an inline trailer modal), save **favorites** to local storage, and **export** your list — all in a fast, accessible single-page app.
 

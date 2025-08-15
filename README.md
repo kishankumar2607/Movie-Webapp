@@ -46,7 +46,7 @@ Find your next favorite film. Browse **popular** movies, filter by **genres**, v
 ### 2) Install
 ```bash
 npm install
-# or: pnpm install / yarn
+# or: npm install --f / yarn
 ```
 
 ### 3) Environment Variables
@@ -251,5 +251,3 @@ MIT © 2025 Your Name
 
 ## 🧑‍💻 Developed By
 [Kishan Kumar Das](https://kishankumardas.com) | [GitHub](https://github.com/kishankumar2607) | [LinkedIn](https://www.linkedin.com/in/kishan-kumar-das/)
-
-

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./styles.css";
+import { Helmet } from "react-helmet-async";
 import {
   getPopularMovies,
   searchMovies,
@@ -86,66 +87,82 @@ const Movies = () => {
   // NEW: handy trimmed query
   const trimmed = query.trim();
 
-  return (
-    <section className="movies">
-      <div className="hero_bg" aria-hidden="true" />
-      <Container>
-        <div className="movies_header">
-          <h1>{trimmed ? "Search Results" : "Popular Movies"}</h1>
+  const isSearch = trimmed.length >= 2;
+  const pageSuffix = page > 1 ? ` – Page ${page}` : "";
+  const moviesTitle = isSearch
+    ? `Search “${trimmed}”${pageSuffix} - MovieFinder`
+    : `Popular Movies${pageSuffix} - MovieFinder`;
+  const moviesDesc = isSearch
+    ? `Results for “${trimmed}”. Browse titles and save to your favorites.`
+    : `Trending popular movies. Browse details and save your favorites.`;
 
-          <div className="toolbar">
-            <input
-              aria-label="Search movies"
-              className="input"
-              placeholder="Search movies…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+  return (
+    <>
+      <Helmet>
+        <title>{moviesTitle}</title>
+        <meta name="description" content={moviesDesc} />
+      </Helmet>
+
+      <section className="movies">
+        <div className="hero_bg" aria-hidden="true" />
+        <Container>
+          <div className="movies_header">
+            <h1>{trimmed ? "Search Results" : "Popular Movies"}</h1>
+
+            <div className="toolbar">
+              <input
+                aria-label="Search movies"
+                className="input"
+                placeholder="Search movies…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {err && <p className="muted">{err}</p>}
+          {loading && <Loader />}
+
+          {!loading && !err && trimmed.length >= 2 && display.length === 0 && (
+            <div className="empty-state" role="status" aria-live="polite">
+              <h2>No results for “{trimmed}”</h2>
+              <p className="muted">
+                Try a different title or check the spelling.
+              </p>
+              <button className="btn btn-outline" onClick={() => setQuery("")}>
+                Clear search
+              </button>
+            </div>
+          )}
+
+          {/* Movies grid */}
+          {!loading && !(trimmed.length >= 2 && display.length === 0) && (
+            <div className="movies-list">
+              {display.map((m) => (
+                <MovieCard
+                  key={m.id}
+                  movie={toAppMovie(m, generesById)}
+                  onToggleFavorite={toggleFavorite}
+                  isFav={inFav(m)}
+                />
+              ))}
+            </div>
+          )}
+
+          <div className="pagination">
+            <Paginator
+              page={page}
+              totalPages={totalPages}
+              onChange={(p) => {
+                setPage(p);
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              disabled={loading}
             />
           </div>
-        </div>
-
-        {err && <p className="muted">{err}</p>}
-        {loading && <Loader />}
-
-        {!loading && !err && trimmed.length >= 2 && display.length === 0 && (
-          <div className="empty-state" role="status" aria-live="polite">
-            <h2>No results for “{trimmed}”</h2>
-            <p className="muted">
-              Try a different title or check the spelling.
-            </p>
-            <button className="btn btn-outline" onClick={() => setQuery("")}>
-              Clear search
-            </button>
-          </div>
-        )}
-
-        {/* Movies grid */}
-        {!loading && !(trimmed.length >= 2 && display.length === 0) && (
-          <div className="movies-list">
-            {display.map((m) => (
-              <MovieCard
-                key={m.id}
-                movie={toAppMovie(m, generesById)}
-                onToggleFavorite={toggleFavorite}
-                isFav={inFav(m)}
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="pagination">
-          <Paginator
-            page={page}
-            totalPages={totalPages}
-            onChange={(p) => {
-              setPage(p);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            disabled={loading}
-          />
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </>
   );
 };
 

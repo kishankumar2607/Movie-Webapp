@@ -1,49 +1,91 @@
+import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import { img } from "../../api/tmdb";
+import "./styles.css";
+import Button from "../../components/Button/Button";
 
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import './styles.css';
+function normalize(f) {
+  // Make favorites robust to old/new shapes
+  return {
+    id: String(f.id),
+    title: f.title || f.name || "",
+    year: f.year || (f.release_date || "").slice(0, 4) || "",
+    
+    // keep genres if already names; if array of objects, map to names; else empty
+    genre: Array.isArray(f.genre)
+      ? f.genre
+      : Array.isArray(f.genres)
+      ? f.genres
+          .map((g) => (typeof g === "string" ? g : g?.name))
+          .filter(Boolean)
+      : [],
+    rating: f.rating ?? f.vote_average ?? "",
+
+    // critical: fallback to TMDB poster URL if only poster_path exists
+    poster: f.poster || img(f.poster_path, "w342"),
+    overview: f.overview || "",
+  };
+}
 
 const Favorites = () => {
-  const [favorites, setFavorites] = useState(() => JSON.parse(localStorage.getItem('favorites') || '[]'));
+  const [favorites, setFavorites] = useState(() => {
+    const raw = JSON.parse(localStorage.getItem("favorites") || "[]");
+    return raw.map(normalize);
+  });
 
-  useEffect(()=>localStorage.setItem('favorites', JSON.stringify(favorites)), [favorites]);
+  // Keep storage updated in the normalized shape
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
-  const remove = (id) => setFavorites(prev => prev.filter(f => f.id !== id));
-
-  const downloadFavorites = () => {
-    const blob = new Blob([JSON.stringify(favorites, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'favorites.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
+  const remove = (id) =>
+    setFavorites((prev) => prev.filter((f) => String(f.id) !== String(id)));
 
   return (
-    <section>
-      <h1>Your Favorites</h1>
-      {favorites.length === 0 ? (
-        <p className="muted">No favorites yet. Go to <Link to="/movies">Popular</Link> and add some!</p>
-      ) : (
-        <>
-          <div className="toolbar">
-            <button className="btn" onClick={downloadFavorites}>Download Favorites (.json)</button>
+    <section className="favorites">
+      <div className="hero_bg" aria-hidden="true" />
+      <Container>
+        <div className="favorites_header">
+          <h1>Your Favorites</h1>
+        </div>
+
+        {favorites.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">⭐</div>
+            <h2>No favorites yet</h2>
+            <p>
+              Browse through our collection of movies and add them to your
+              favorites to get started.
+            </p>
+            <Button href="/movies" text={"Explore Movies"} />
           </div>
-          <ul className="fav-list">
-            {favorites.map(f => (
+        ) : (
+          <ul className="favorites-list">
+            {favorites.map((f) => (
               <li key={f.id} className="fav-item">
-                <img src={f.poster} alt={f.title} />
-                <div>
-                  <strong>{f.title}</strong>
-                  <div className="muted">{f.year} • {f.genre.join(', ')} • ⭐ {f.rating}</div>
+                <img src={f.poster} alt={f.title} className="fav-poster" />
+                <div className="fav-body">
+                  <strong className="fav-title">{f.title}</strong>
+                  <div className="fav-meta">
+                    <p>Year: {f.year}</p>
+                    <p>Genre: {f.genre.join(", ")}</p>
+                    <p>Rating: ⭐{f.rating.toFixed(1)}</p>
+                  </div>
                 </div>
-                <button className="btn btn-small btn-alt" onClick={()=>remove(f.id)}>Remove</button>
+                <div className="d-flex justify-content-center align-items-center">
+                  <button
+                    className="remove-fav-button"
+                    onClick={() => remove(f.id)}
+                    aria-label={`Remove ${f.title} from favorites`}
+                  >
+                    Remove
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
-        </>
-      )}
+        )}
+      </Container>
     </section>
   );
 };

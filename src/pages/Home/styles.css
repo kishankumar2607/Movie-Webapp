@@ -98,7 +98,6 @@
   object-fit: cover;
 }
 
-/* ====== FEATURES ====== */
 .feature-section {
   margin-top: 2rem;
   margin-bottom: 6rem;
@@ -153,7 +152,6 @@
   margin-bottom: 5px;
 }
 
-/* ====== TRENDING GENRES ====== */
 .section--alt {
   background: #0a0a0d;
   padding: 6rem 0rem;
@@ -189,7 +187,6 @@
   color: var(--accent);
 }
 
-/* ====== SPOTLIGHT ====== */
 .spotlight-section {
   margin: 5rem 0rem;
 }
@@ -247,7 +244,6 @@
   margin-bottom: 8px;
 }
 
-/* decorative images via gradients (keeps it light) */
 .spotlight-card .shawshank {
   background-image: linear-gradient(
       180deg,
@@ -273,7 +269,6 @@
     url("https://image.tmdb.org/t/p/w780/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg");
 }
 
-/* ====== CTA ====== */
 .cta {
   background: linear-gradient(135deg, var(--accent), #3a1850 60%);
   padding: 4rem 0rem;
@@ -311,7 +306,6 @@
   flex-wrap: wrap;
 }
 
-/* ====== Responsive ====== */
 @media (max-width: 992px) {
   .hero_inner {
     display: flex;

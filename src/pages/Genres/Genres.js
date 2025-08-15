@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect, useCallback } from "react";
 import "./styles.css";
+import { Helmet } from "react-helmet-async";
 import { Container } from "react-bootstrap";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Paginator from "../../components/Paginator/Paginator";
@@ -89,83 +90,102 @@ const Genres = () => {
       ? "All"
       : genres.find((g) => g.id === Number(id))?.name || "Genre";
 
+  const isAll = selected === "All";
+  const titleText = isAll
+    ? `Popular Movies${page > 1 ? ` - Page ${page}` : ""} - MovieFinder`
+    : `Genre: ${nameFor(selected)}${
+        page > 1 ? ` - Page ${page}` : ""
+      } - MovieFinder`;
+  const descText = isAll
+    ? "Browse popular movies. Save favorites and enjoy later."
+    : `Browse ${nameFor(
+        selected
+      )} movies. Save favorites and export your list.`;
+
   return (
-    <section className="genres">
-      <div className="hero_bg" aria-hidden="true" />
-      <Container>
-        <div className="genres_header">
-          <h1>
-            {selected === "All"
-              ? "Popular Movies"
-              : `Genre: ${nameFor(selected)}`}
-          </h1>
+    <>
+      <Helmet>
+        <title>{titleText}</title>
+        <meta name="description" content={descText} />
+      </Helmet>
 
-          <div className="toolbar">
-            <label htmlFor="genre" className="sr-only">
-              Genre
-            </label>
-            <select
-              id="genre"
-              className="input select"
-              value={selected}
-              onChange={(e) => setSelected(e.target.value)}
-              aria-label="Select a genre"
-            >
-              {allGenres.map((id) => (
-                <option key={id} value={id}>
-                  {nameFor(id)}
-                </option>
-              ))}
-            </select>
+      <section className="genres">
+        <div className="hero_bg" aria-hidden="true" />
+        <Container>
+          <div className="genres_header">
+            <h1>
+              {selected === "All"
+                ? "Popular Movies"
+                : `Genre: ${nameFor(selected)}`}
+            </h1>
+
+            <div className="toolbar">
+              <label htmlFor="genre" className="sr-only">
+                Genre
+              </label>
+              <select
+                id="genre"
+                className="input select"
+                value={selected}
+                onChange={(e) => setSelected(e.target.value)}
+                aria-label="Select a genre"
+              >
+                {allGenres.map((id) => (
+                  <option key={id} value={id}>
+                    {nameFor(id)}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
 
-        {err && <p className="muted">{err}</p>}
-        {loading && <Loader />}
+          {err && <p className="muted">{err}</p>}
+          {loading && <Loader />}
 
-        <div className="genres-list">
-          {!loading &&
-            items.map((m) => {
-              // map TMDB -> app shape ONCE per item
-              const appMovie = {
-                id: String(m.id),
-                title: m.title,
-                year: (m.release_date || "").slice(0, 4),
-                genre: (m.genre_ids || [])
-                  .map((id) => genres.find((g) => g.id === id)?.name)
-                  .filter(Boolean)
-                  .slice(0, 2),
-                rating: m.vote_average,
-                poster: img(m.poster_path, "w342"),
-                overview: m.overview || "",
-              };
+          <div className="genres-list">
+            {!loading &&
+              items.map((m) => {
+                // map TMDB -> app shape ONCE per item
+                const appMovie = {
+                  id: String(m.id),
+                  title: m.title,
+                  year: (m.release_date || "").slice(0, 4),
+                  genre: (m.genre_ids || [])
+                    .map((id) => genres.find((g) => g.id === id)?.name)
+                    .filter(Boolean)
+                    .slice(0, 2),
+                  rating: m.vote_average,
+                  poster: img(m.poster_path, "w342"),
+                  overview: m.overview || "",
+                };
 
-              return (
-                <MovieCard
-                  key={appMovie.id}
-                  movie={appMovie}
-                  isFav={inFavById(appMovie.id)}
-                  onToggleFavorite={() => toggleFavorite(appMovie)}
-                />
-              );
-            })}
-        </div>
-
-        {totalPages > 1 && (
-          <div className="pagination">
-            <Paginator
-              page={page}
-              totalPages={totalPages}
-              onChange={(p) => {
-                setPage(p);
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              disabled={loading}
-            />
+                return (
+                  <MovieCard
+                    key={appMovie.id}
+                    movie={appMovie}
+                    isFav={inFavById(appMovie.id)}
+                    onToggleFavorite={() => toggleFavorite(appMovie)}
+                  />
+                );
+              })}
           </div>
-        )}
-      </Container>
-    </section>
+
+          {totalPages > 1 && (
+            <div className="pagination">
+              <Paginator
+                page={page}
+                totalPages={totalPages}
+                onChange={(p) => {
+                  setPage(p);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                disabled={loading}
+              />
+            </div>
+          )}
+        </Container>
+      </section>
+    </>
   );
 };
 

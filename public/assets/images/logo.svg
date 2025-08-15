@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon only: magnifying glass + play -->
+  <circle cx="56" cy="56" r="36" stroke="#873bad" stroke-width="6" fill="none" />
+  <polygon points="50,40 50,72 74,56" fill="#873bad" />
+  <line x1="84" y1="84" x2="112" y2="112" stroke="#873bad" stroke-width="8" stroke-linecap="round" />
+</svg>

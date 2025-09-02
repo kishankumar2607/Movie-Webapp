@@ -34,6 +34,9 @@ const AppNavbar = () => {
             <Nav.Link as={NavLink} to="/genres">
               Genres
             </Nav.Link>
+            <Nav.Link as={NavLink} to="/country">
+              Country
+            </Nav.Link>
             <Nav.Link as={NavLink} to="/favorites">
               Favorites
             </Nav.Link>

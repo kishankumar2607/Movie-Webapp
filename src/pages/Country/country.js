@@ -69,6 +69,7 @@ const Country = () => {
       }
     })();
   }, []);
+
   const genresById = useMemo(() => {
     const map = {};
     genres.forEach(({ id, name }) => (map[id] = name));
@@ -168,10 +169,12 @@ const Country = () => {
         .filter(Boolean)
     );
   }, [items]);
+
   const availableLangs = useMemo(
     () => langs.filter((l) => l.code !== "Any" && presentLangCodes.has(l.code)),
     [langs, presentLangCodes]
   );
+
   const allOtherLangs = useMemo(
     () =>
       langs.filter((l) => l.code !== "Any" && !presentLangCodes.has(l.code)),
@@ -183,6 +186,7 @@ const Country = () => {
   const langName = (code) => langs.find((l) => l.code === code)?.name || "";
 
   const isAll = selected === "All";
+  
   const titleText = isAll
     ? `Newest Movies${page > 1 ? ` - Page ${page}` : ""} - MovieFinder`
     : `Country: ${countryName(selected)}${

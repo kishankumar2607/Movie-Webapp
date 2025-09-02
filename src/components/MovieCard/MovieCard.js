@@ -1,13 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./styles.css";
 
 // MovieCard component
 const MovieCard = ({ movie, onToggleFavorite, isFav }) => {
+  const location = useLocation();
+
   return (
     <article className="movie-card" data-testid="movie-card">
       <Link
         to={`/movie/${movie.id}`}
+        state={{ from: location.pathname + location.search }}
         aria-label={`Open ${movie.title}`}
         className="poster-link"
       >

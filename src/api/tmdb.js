@@ -72,6 +72,47 @@ export const discoverByGenre = (genreId, page = 1) => {
   );
 };
 
+//Discover movies by country
+export const discoverByCountry = (
+  countryCode,
+  page = 1,
+  {
+    sortBy = "primary_release_date.desc",
+    from,
+    to = new Date().toISOString().slice(0, 10),
+    minVotes = 50,
+    originalLanguage,
+  } = {}
+) => {
+  const params = new URLSearchParams({
+    api_key: API_KEY,
+    language: "en-US",
+    sort_by: sortBy,
+    include_adult: "false",
+    page: String(page),
+    "vote_count.gte": String(minVotes),
+  });
+
+  // Only add country filter when a real country is selected
+  if (countryCode && countryCode !== "All") {
+    params.set("with_origin_country", countryCode);
+  }
+
+  if (from) params.set("primary_release_date.gte", from);
+  if (to) params.set("primary_release_date.lte", to);
+
+  if (originalLanguage && originalLanguage !== "Any") {
+    params.set("with_original_language", originalLanguage.toLowerCase());
+  }
+
+  return fetchMovies(`/discover/movie?${params.toString()}`);
+};
+
+//List of supported languages
+export const getLanguages = () => {
+  return fetchMovies(`/configuration/languages?api_key=${API_KEY}`);
+};
+
 // Get video of movie
 export const getMovieVideos = (movieId) => {
   return fetchMovies(
